@@ -1,0 +1,24 @@
+version: '3'
+services:
+  api:
+    build: .
+    command: npm run dev
+    ports:
+      - "9000:9000"
+    depends_on:
+      - mongo
+      - mongo-test
+    volumes:
+      - .:/code
+    environment:
+      - SERVER_URL='http://0.0.0.0:9000'
+  mongo:
+    image: mongo:3.6.5-jessie
+    command: mongod
+    ports:
+      - "27017:27017"
+  mongo-test:
+    image: mongo:3.6.5-jessie
+    command: mongod --port 27018
+    ports:
+      - "27018:27018"
